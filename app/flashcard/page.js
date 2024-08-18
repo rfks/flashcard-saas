@@ -26,6 +26,7 @@ export default function Flashcard(){
                 flashcards.push({id:doc.id, ...doc.data()})
             })
             setFlashcards(flashcards)
+            console.log(typeof flashcards)
         }
         getFlashcard()
     },[user,search])
