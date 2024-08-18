@@ -89,6 +89,11 @@ export default function Home() {
     }
   }
   
+  const updateUser = async (subscription) => {
+    await user.update({
+      subscription: subscription
+    })
+  }
 
   return (
       <Container maxWidth="100vw" style={{background:"lightblue"}}>

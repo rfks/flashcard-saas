@@ -6,6 +6,7 @@ import getStripe from "@/utils/get-stripe"
 import { useSearchParams } from "next/navigation"
 import { CircularProgress, Typography, Container, Box, Link } from "@mui/material"
 import Header from '../header'
+import {useUser, isSignedIn} from '@clerk/nextjs'
 
 export default function ResultPage() {
     const router = useRouter()
@@ -16,6 +17,14 @@ export default function ResultPage() {
     const [session, setSession] = useState(null)
     const [error, setError] = useState(null)
     const [subscribed,setSubscribed] = useState(false)
+
+    const user = useUser()
+
+    const updateUser = async (subscription) => {
+        await user.update({
+          subscription: subscription
+        })
+      }
 
     useEffect(() => {
         const fetchCheckoutSession = async () => {
@@ -75,7 +84,8 @@ export default function ResultPage() {
                                 We have received your payment. You will receive an email with the order details shortly.
                             </Typography>
                             <Typography variant="h3">
-                                {/* setSubscribed(true) */}
+                                {/* TODO: save users subscription status to Clerk */}
+                                {/* {updateUser('subscribed')} */}
                                 <Link href="/generate">Go and generate Flashcards.</Link>
                             </Typography>
                         </Box>
