@@ -38,7 +38,7 @@ export default function Flashcards(){
     }
 
     return (
-        <Container maxWidth="100vw">
+        <Container maxWidth="100vw" style={{background:"lightblue"}}>
             <Header/>
             <Grid container spacing={3} sx={{mt: 4}}>
                 {flashcards.map((flashcard,index) => (

@@ -13,6 +13,7 @@ import Header from "./header"
 export default function Home() {
     const {isLoaded,isSignedIn,user} = useUser()
     const router = useRouter()
+    const [subscribed,setSubscribed] = useState(false)
 
     const str=`
       [
@@ -81,7 +82,11 @@ export default function Home() {
 
   const pricingRef=useRef()
   const executeScroll = () => {
+    if (user && subscribed) {
+      router.push('/generate')
+    } else {
       pricingRef.current?.scrollIntoView({ behavior: "smooth" })
+    }
   }
   
 
@@ -209,7 +214,8 @@ export default function Home() {
                 border: '1px solid',
                 borderColor: 'grey.300',
                 borderRadius: 2,
-                backgroundColor: 'red'
+                backgroundColor: 'red',
+                color: 'white'
               }}>
               <Typography variant="h5" gutterBottom>Trial</Typography>
               <Typography variant="h6" gutterBottom>Free for a month</Typography>
@@ -226,7 +232,8 @@ export default function Home() {
                 border: '1px solid',
                 borderColor: 'grey.300',
                 borderRadius: 2,
-                backgroundColor: 'white'
+                backgroundColor: 'orange',
+                color: 'white'
               }}>
               <Typography variant="h5" gutterBottom>Basic</Typography>
               <Typography variant="h6" gutterBottom>$5 / month</Typography>
@@ -243,7 +250,8 @@ export default function Home() {
                 border: '1px solid',
                 borderColor: 'grey.300',
                 borderRadius: 2,
-                backgroundColor: 'green'
+                backgroundColor: 'green',
+                color: 'white'
               }}>
               <Typography variant="h5" gutterBottom>Pro</Typography>
               <Typography variant="h6" gutterBottom>$10 / month</Typography>

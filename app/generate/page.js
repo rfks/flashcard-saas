@@ -72,7 +72,7 @@ export default function Generate(){
         router.push('/flashcards')
     }
 
-    return <Container maxWidth="100vw">
+    return <Container maxWidth="100vw" style={{background:"lightblue"}}>
         <Header/>
         <Box sx={{mt:4, mb:6, display:'flex', flexDirection:'column', alignItems:'center' }}>   
             <Typography variant="h4">Generate Flashcards</Typography>
@@ -93,11 +93,11 @@ export default function Generate(){
             </Paper>
         </Box>
         {flashcards.length>0 &&(
-            <Box sx={{mt:4}}>
+            <Box sx={{mt:4}} style={{background:"lightblue"}}>
                 <Typography variant='h5'>
                     Flashcards preview
                 </Typography>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} style={{background:"lightblue"}}>
                     {flashcards.map((flashcard, index) => (
                         <Grid item xs={12} sm={6} md={4} key={index}>
                             <Card>

@@ -15,6 +15,7 @@ export default function ResultPage() {
     const [loading, setLoading] = useState(true)
     const [session, setSession] = useState(null)
     const [error, setError] = useState(null)
+    const [subscribed,setSubscribed] = useState(false)
 
     useEffect(() => {
         const fetchCheckoutSession = async () => {
@@ -59,7 +60,7 @@ export default function ResultPage() {
     }
 
     return (
-        <Container maxWidth="100vw">
+        <Container maxWidth="100vw" style={{background:"lightblue"}}>
             <Header/>
             <Box sx={{textAlign: "center", mt:4}}>
             {
@@ -73,8 +74,9 @@ export default function ResultPage() {
                             <Typography variant="body1">
                                 We have received your payment. You will receive an email with the order details shortly.
                             </Typography>
-                            <Typography>
-                                <Link href="/generate">You can go and generate Flashcards.</Link>
+                            <Typography variant="h3">
+                                {/* setSubscribed(true) */}
+                                <Link href="/generate">Go and generate Flashcards.</Link>
                             </Typography>
                         </Box>
                     </>
