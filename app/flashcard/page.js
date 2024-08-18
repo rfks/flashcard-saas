@@ -6,6 +6,7 @@ import {collection, doc, getDoc, getDocs} from 'firebase/firestore'
 import { db } from "@/firebase"
 import { useSearchParams } from "next/navigation"
 import { CardContent, Card, Grid, Box, Container, TextField, Typography, Paper, CardActionArea, Button, DialogActions, Dialog, DialogContent, DialogTitle, DialogContentText } from "@mui/material"
+import Header from '../header'
 
 export default function Flashcard(){
     const {isLoaded,isSignedIn,user} = useUser()
@@ -44,6 +45,7 @@ export default function Flashcard(){
 
     return (
         <Container maxWidth="100vw">
+            <Header/>
             <Grid container spacing={3} sx={{mt:4}}>
             {flashcards.map((flashcard, index) => (
                         <Grid item xs={12} sm={6} md={4} key={index}>

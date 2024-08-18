@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { collection, getDoc, doc, writeBatch } from "firebase/firestore"
 import { db } from '@/firebase'
+import Header from '../header'
 
 export default function Generate(){
     const {isLoaded, isSignedIn, user} = useUser()
@@ -20,7 +21,7 @@ export default function Generate(){
         fetch('/api/generate',{
             method:'POST',
             body: text,
-        }).then((res) => res.json()).then((data)=>setFlashcards(data))
+        }).then((res) => res.json()).then((data)=>{setFlashcards(data);setFlipped([])})
     }
 
     const handleCardClick = (id) => {
@@ -71,7 +72,8 @@ export default function Generate(){
         router.push('/flashcards')
     }
 
-    return <Container maxWidth="md">
+    return <Container maxWidth="100vw">
+        <Header/>
         <Box sx={{mt:4, mb:6, display:'flex', flexDirection:'column', alignItems:'center' }}>   
             <Typography variant="h4">Generate Flashcards</Typography>
             <Paper sx={{p:4, width:'100%'}}>

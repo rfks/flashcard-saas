@@ -1,13 +1,18 @@
 'use client'
 
-import Image from "next/image";
+import Image from "next/image"
 import getStripe from '@/utils/get-stripe'
-import { SignedIn,SignedOut, UserButton } from "@clerk/nextjs"
+import { SignedIn,SignedOut, UserButton, UserProfile } from "@clerk/nextjs"
 import { Link, AppBar, Toolbar, Typography, Container, Button, Box, Grid, CardContent, Card, CardActionArea } from "@mui/material";
-import Head from "next/head"
-import { useState, useRef } from "react";
+
+import { useState, useRef } from "react"
+import { useUser } from "@clerk/nextjs"
+import { useRouter } from "next/navigation";
+import Header from "./header"
 
 export default function Home() {
+    const {isLoaded,isSignedIn,user} = useUser()
+    const router = useRouter()
 
     const str=`
       [
@@ -45,28 +50,32 @@ export default function Home() {
 
 
   const handleSubmit = async (amount) => {
-    const checkoutSession = await fetch('/api/checkout_session',{
-      method: "POST",
-      headers: {
-        origin: 'http://localhost:3000',
-        amount: amount,
-      },
-    })
+    if (!user) {
+      router.push(`/sign-in`)  
+    } else {
+      const checkoutSession = await fetch('/api/checkout_session',{
+        method: "POST",
+        headers: {
+          origin: 'http://localhost:3000',
+          amount: amount,
+        },
+      })
 
-    const checkoutSessionJson = await checkoutSession.json()
+      const checkoutSessionJson = await checkoutSession.json()
 
-    if (checkoutSession.statusCode === 500) {
-      console.error(checkoutSession.message)
-      return
-    }
+      if (checkoutSession.statusCode === 500) {
+        console.error(checkoutSession.message)
+        return
+      }
 
-    const stripe = await getStripe()
-    const {error} = await stripe.redirectToCheckout({
-      sessionId: checkoutSessionJson.id,
-    })
+      const stripe = await getStripe()
+      const {error} = await stripe.redirectToCheckout({
+        sessionId: checkoutSessionJson.id,
+      })
 
-    if (error) {
-      console.warn(error.message)
+      if (error) {
+        console.warn(error.message)
+      }
     }
   }
 
@@ -78,7 +87,8 @@ export default function Home() {
 
   return (
       <Container maxWidth="100vw" style={{background:"lightblue"}}>
-        <Head>
+        <Header/>
+        {/* <Head>
           <title>Flashcard GenAI</title>
           <meta name="description" content="Create flashcards from your text." />
         </Head>
@@ -93,7 +103,7 @@ export default function Home() {
               <UserButton/>
             </SignedIn>
           </Toolbar>
-        </AppBar>
+        </AppBar> */}
         <Box sx={{textAlign:"center", my:4}}>
           <Typography variant="h2">
             Welcome to Flashcard GenAI

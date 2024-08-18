@@ -4,7 +4,8 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import getStripe from "@/utils/get-stripe"
 import { useSearchParams } from "next/navigation"
-import { CircularProgress, Typography, Container, Box } from "@mui/material"
+import { CircularProgress, Typography, Container, Box, Link } from "@mui/material"
+import Header from '../header'
 
 export default function ResultPage() {
     const router = useRouter()
@@ -58,17 +59,22 @@ export default function ResultPage() {
     }
 
     return (
-        <Container maxWidth="100vw" sx={{textAlign: "center", mt:4}}>
+        <Container maxWidth="100vw">
+            <Header/>
+            <Box sx={{textAlign: "center", mt:4}}>
             {
                 session.payment_status === 'paid' ? (
                     <>
                         <Typography variant="h4">
-                            Thank you for your purchasing
+                            Thank you for your purchase.
                         </Typography>
                         <Box sx={{mt:22}}>
                             <Typography variant="h6">Session ID: {session_id}</Typography>
                             <Typography variant="body1">
                                 We have received your payment. You will receive an email with the order details shortly.
+                            </Typography>
+                            <Typography>
+                                <Link href="/generate">You can go and generate Flashcards.</Link>
                             </Typography>
                         </Box>
                     </>
@@ -79,12 +85,14 @@ export default function ResultPage() {
                         </Typography>
                         <Box sx={{mt:22}}>
                             <Typography variant="body1">
-                                Your payment was not successful. Please try again.
+                                {/* TODO: how to scroll to Pricing, #pricingRef does not work */}
+                                Your payment was not successful. <Link href="/">Please try again.</Link>
                             </Typography>
                         </Box>                    
                     </>
             )
             }
+            </Box>
         </Container>
     )
 }
